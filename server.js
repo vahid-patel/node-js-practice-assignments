@@ -1,9 +1,11 @@
 import express from "express";
 
+
 const app = express();
 
 // app.use(express.static("public"))
 app.use(express.json())
+app.use(express.urlencoded())
 
 app.get("/user", (req, res, next) => {
   const { name, city } = req.query;
@@ -27,8 +29,16 @@ const user = {
 
 app.post('/user',(req,res)=>{
     console.log(user.name)
-    const {name,age,city}=user
+    const {name,age,city}= req.body
     res.json({name,age,city})
+})
+
+app.put('/user',(req,res)=>{
+    const {name,age,city} = req.body
+    user.name = name
+    user.age = age
+    user.city = city
+    res.json(user)
 })
 
 app.listen(3000, () => {
