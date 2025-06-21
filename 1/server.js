@@ -21,7 +21,7 @@ app.get("/:user/:name", (req, res) => {
   res.json({ user, name });
 });
 
-const user = {
+let user = {
     name:"vahid",
     age: 20,
     city: "Latur"
@@ -39,6 +39,18 @@ app.put('/user',(req,res)=>{
     user.age = age
     user.city = city
     res.json(user)
+})
+
+app.delete('/user',(req,res)=>{
+    const {name} = req.body
+
+    if(user && user.name === name){
+      user.name= null
+      console.log(user)
+      return res.status(200).json({msg:`user with the name ${name} is deleted`})
+    }
+    res.status(404).json({msg:`user with the name ${name} has not found`})
+    
 })
 
 app.listen(3000, () => {
