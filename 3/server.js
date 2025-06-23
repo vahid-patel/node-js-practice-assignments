@@ -1,6 +1,7 @@
 import express from "express";
-import fs from "fs";
+// import logMessage from './logger.js'
 import log from './logger.js'
+import fs from "fs";
 import path from "path";
 
 import { fileURLToPath } from "url";
@@ -15,6 +16,12 @@ const app = express();
 
 app.use(express.json());
 
+// app.get('/', (req, res)=>{
+//   const method = req.method()
+//   logMessage('hello im root')
+//   res.json({messsage: 'hello im root'})
+// })
+
 //Synchronous
 
 // create
@@ -22,6 +29,7 @@ app.get("/create/:username", (req, res) => {
   const { username } = req.params;
   const File = `${username}.txt`;
   const content = `hi I am ${username}`;
+  
 
   try{
       fs.writeFileSync(File, content);
