@@ -25,7 +25,7 @@ app.use(express.json());
 //Synchronous
 
 // create
-app.get("/create/:username", (req, res) => {
+app.get("/create/:username", (req, res,next) => {
   const { username } = req.params;
   const File = `${username}.txt`;
   const content = `hi I am ${username}`;
@@ -38,12 +38,13 @@ app.get("/create/:username", (req, res) => {
 
   }catch(err){
     log(`Failed to create file by synchronous method`)
-    return res.status(400).send(err.message)
+    err.status = 400
+    return next(err)
   }
 });
 
 //read
-app.get("/read/:username", (req, res) => {
+app.get("/read/:username", (req, res,next) => {
   const { username } = req.params;
   const File = `${username}.txt`;
 
@@ -53,12 +54,12 @@ app.get("/read/:username", (req, res) => {
     return res.status(200).send(data);
   } catch (err) {
     log(`Failed to read file by synchronous method`)
-    return res.status(400).send(err.message)
-  }
+    err.status = 400
+    return next(err)  }
 });
 
 //update
-app.put("/update", (req, res) => {
+app.put("/update", (req, res,next) => {
   const { username, message } = req.body;
   const File = `${username}.txt`;
 
@@ -69,12 +70,12 @@ app.put("/update", (req, res) => {
     return res.status(200).send(`file name ${username}.txt Updated Successfully`);
   } catch (err) {
     log(`Failed to update file by synchronous method`)
-    return res.status(400).send(err.message)
-  }
+    err.status = 400
+    return next(err)  }
 });
 
 //delete
-app.delete("/delete/:username", (req, res) => {
+app.delete("/delete/:username", (req, res,next) => {
   const { username } = req.params;
   const File = `${username}.txt`;
 
@@ -84,14 +85,14 @@ app.delete("/delete/:username", (req, res) => {
     res.send(`file name ${username}.txt deleted succesfully`);
   } catch (err) {
     log(`Failed to deleted file by synchronous method`)
-    return res.status(400).send(err.message)
-  }
+    err.status = 400
+    return next(err)  }
 });
 
 //Asynchronous
 
 // //create
-// app.get("/create/:username", (req, res) => {
+// app.get("/create/:username", (req, res,next) => {
 //   const { username } = req.params;
 //   const File = `${username}.txt`;
 //   const content = `hi I am ${username}`;
@@ -99,8 +100,8 @@ app.delete("/delete/:username", (req, res) => {
 //   fs.writeFile(File, content, (err) => {
 //     if(err){
 //         log(`Failed to create file by Asynchronous method`)
-//         return res.send(err)
-//     }
+//         err.status = 400
+//         return next(err)    }
 //   });
 
 //   log(`File Created Successfully by Asynchronous method `)  
@@ -108,14 +109,14 @@ app.delete("/delete/:username", (req, res) => {
 // });
 
 // //read
-// app.get("/read/:username", (req, res) => {
+// app.get("/read/:username", (req, res,next) => {
 //   const { username } = req.params;
 //   const File = `${username}.txt`;
 //   fs.readFile(File, "utf-8",(err,data)=>{
 //     if(err){
 //         log(`Failed to read file by Asynchronous method`)
-//         return res.send(err)
-//     }
+//         err.status = 400
+//         return next(err)    }
 //     else{
 //         log(`File read Successfully by Asynchronous method`)
 //         return res.status(200).send(data)
@@ -125,22 +126,22 @@ app.delete("/delete/:username", (req, res) => {
 // });
 
 // //update
-// app.put("/update", (req, res) => {
+// app.put("/update", (req, res,next) => {
 //   const { username, message } = req.body;
 //   const File = `${username}.txt`;
 
 //   fs.appendFile(File, message,(err)=>{
 //     if(err){
 //         log(`Failed to update file by synchronous method`)
-//         return res.send(err)
-//     }
+//         err.status = 400
+//         return next(err)    }
 //   });
 //   log(`File updated Successfully by Asynchronous method`)
 //   return res.status(200).send(`file name ${username}.txt Updated Successfully`);
 // });
 
 // //delete
-// app.delete("/delete/:username", (req, res) => {
+// app.delete("/delete/:username", (req, res,next) => {
 //   const { username } = req.params;
 //   const File = `${username}.txt`;
 
@@ -148,8 +149,8 @@ app.delete("/delete/:username", (req, res) => {
 //     if(err)
 //     {
 //         log(`Failed to deleted file by synchronous method`)
-//         return res.send(err)
-//     }
+//         err.status = 400
+//         return next(err)    }
 //   });
 //   log(`File deleted Successfully by Asynchronous method`)
 //   res.send(`file name ${username}.txt deleted succesfully`);
@@ -160,15 +161,30 @@ readStream.on('data',(chunk)=> console.log(chunk))
 readStream.on('end',()=> console.log('Finished'))
 
 
-app.get('/log',(req,res)=>{
+app.get('/log',(req,res,next)=>{
     fs.readFile("logger.txt", "utf-8", (err, data) => {
     if (err) {
       log(`Error reading log file: ${err.message}`);
-      return res.status(500).send("Could not read log file");
+        err.status = 400
+        return next(err)
     }
     res.send(data); 
   });
 })
+
+const errorHandler = (err, req, res, next)=> {
+    // console.log(err, req.body)
+    if(err.status)
+    {
+        res.status(err.status).json({msg : err.message})
+    } else{
+        res.status(500).json({msg : err.message})
+    }
+    
+}
+
+app.use(errorHandler)
+
 app.listen(3000, () => {
   console.log(`Server is running`);
 });

@@ -8,41 +8,41 @@ app.use(express.json());
 //Synchronous
 
 //create
-// app.get("/create/:username", (req, res) => {
-//   const { username } = req.params;
-//   const File = `${username}.txt`;
-//   const content = `hi I am ${username}`;
+app.get("/create/:username", (req, res) => {
+  const { username } = req.params;
+  const File = `${username}.txt`;
+  const content = `hi I am ${username}`;
 
-//   fs.writeFileSync(File, content);
-//   return res.status(200).json({ msg: `file successfully created` });
-// });
+  fs.writeFileSync(File, content);
+  return res.status(200).json({ msg: `file successfully created` });
+});
 
-// //read
-// app.get("/read/:username", (req, res) => {
-//   const { username } = req.params;
-//   const File = `${username}.txt`;
-//   const data = fs.readFileSync(File, "utf-8");
+//read
+app.get("/read/:username", (req, res) => {
+  const { username } = req.params;
+  const File = `${username}.txt`;
+  const data = fs.readFileSync(File, "utf-8");
 
-//   return res.status(200).send(data);
-// });
+  return res.status(200).send(data);
+});
 
-// //update
-// app.put("/update", (req, res) => {
-//   const { username, message } = req.body;
-//   const File = `${username}.txt`;
+//update
+app.put("/update", (req, res) => {
+  const { username, message } = req.body;
+  const File = `${username}.txt`;
 
-//   fs.appendFileSync(File, message);
-//   return res.status(200).send(`file name ${username}.txt Updated Successfully`);
-// });
+  fs.appendFileSync(File, message);
+  return res.status(200).send(`file name ${username}.txt Updated Successfully`);
+});
 
-// //delete
-// app.delete("/delete/:username", (req, res) => {
-//   const { username } = req.params;
-//   const File = `${username}.txt`;
+//delete
+app.delete("/delete/:username", (req, res) => {
+  const { username } = req.params;
+  const File = `${username}.txt`;
 
-//   fs.unlinkSync(File);
-//   res.send(`file name ${username}.txt deleted succesfully`);
-// });
+  fs.unlinkSync(File);
+  res.send(`file name ${username}.txt deleted succesfully`);
+});
 
 //Asynchronous
 
