@@ -1,3 +1,10 @@
+// Build a small Express.js app using the Node.js fs module to manage user files.
+// Create a file named after the user (e.g., username.txt) with default content.
+// Add a routes to read file content and return it to the browser, to update the file by appending new content., to delete the file.
+// Use both synchronous and asynchronous fs methods in your app.
+// Send file content using Express response (res.send) in route.
+// And push it to GitHub
+
 import express from "express";
 import fs from "fs";
 

@@ -1,0 +1,10 @@
+(9/7/2025 - 15:13:6) File Created Successfully by Synchronous method   
+(9/7/2025 - 16:33:44) Failed to read file by synchronous method  
+(9/7/2025 - 16:34:58) Error reading log file: ENOENT: no such file or directory, open 'D:\Github\node-js-practice-assignments\3\logger.txt'  
+(9/7/2025 - 16:35:4) Error reading log file: ENOENT: no such file or directory, open 'D:\Github\node-js-practice-assignments\3\logger.txt'  
+(9/7/2025 - 16:37:8) Error reading log file: ENOENT: no such file or directory, open 'D:\Github\node-js-practice-assignments\3\logger.txt'  
+(9/7/2025 - 17:0:10) File Created Successfully by Synchronous method   
+(9/7/2025 - 18:44:41) File Created Successfully by Synchronous method   
+(9/7/2025 - 18:44:54) File read Successfully by Synchronous method  
+(9/7/2025 - 18:52:16) File updated Successfully by Synchronous method  
+(9/7/2025 - 18:52:42) File read Successfully by Synchronous method  
