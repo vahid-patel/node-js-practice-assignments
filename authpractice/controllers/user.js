@@ -7,5 +7,7 @@ async function handleUserSignup(req,res) {
         email,
         password
     })    
-    return
+    return res.render("home")
 }
+
+export default handleUserSignup
