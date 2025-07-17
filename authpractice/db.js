@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 //Define the MongoDB connection URL
-const mongoURL = 'mongodb+srv://ayyubbhai1885:vahidpatel123@cluster0.blcdvyl.mongodb.net/authPractice'
+// const mongoURL = 'mongodb+srv://ayyubbhai1885:vahidpatel123@cluster0.blcdvyl.mongodb.net/authPractice'
 
 //set up mongoDB connection
-mongoose.connect(mongoURL,{
+mongoose.connect(process.env.mongoURL,{
     
 })
 

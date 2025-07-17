@@ -5,6 +5,7 @@ import menuItem from "./models/menu.js";
 import personRoutes from './routers/personRoutes.js'
 import menuItemRoutes from './routers/menuItemRoutes.js'
 const app = express();
+const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.json()); // req.body
 
@@ -20,6 +21,6 @@ app.use('/menuItem',menuItemRoutes)
 
 
 
-app.listen(3000, () => {
+app.listen(PORT , () => {
   console.log("Server is Running");
 });
