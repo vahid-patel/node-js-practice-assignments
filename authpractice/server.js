@@ -21,7 +21,7 @@ app.get("/",localAuthMiddleware, (req, res) => {
 });
 
 //Person routes
-app.use('/person',localAuthMiddleware,personRoutes)
+app.use('/person',personRoutes)
 
 //Menu Item routes
 app.use('/menuItem',menuItemRoutes)
